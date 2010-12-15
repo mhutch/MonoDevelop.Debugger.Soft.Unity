@@ -162,11 +162,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		protected override void OnAttachToProcess (long processId)
 		{
 			if (UnitySoftDebuggerEngine.UnityPlayers.ContainsKey ((uint)processId)) {
+				int port = (int)(56000 + (processId % 1000));
 				PlayerConnection.PlayerInfo player = UnitySoftDebuggerEngine.UnityPlayers[(uint)processId];
 				try {
-					StartConnecting (new RemoteDebuggerStartInfo (player.m_Id, player.m_IPEndPoint.Address, (int)clientPort), 3, 1000);
+					StartConnecting (new RemoteDebuggerStartInfo (player.m_Id, player.m_IPEndPoint.Address, (int)port), 3, 1000);
 				} catch (Exception ex) {
-					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, clientPort), ex);
+					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, port), ex);
 				}
 				return;
 			}

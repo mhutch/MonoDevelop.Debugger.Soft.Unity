@@ -119,10 +119,16 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			List<ProcessInfo> processes = new List<ProcessInfo> ();
 			lock (unityPlayerConnection) {
 				foreach (string player in unityPlayerConnection.AvailablePlayers) {
-					PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
-					UnityPlayers[info.m_Guid] = info;
-					processes.Add (new ProcessInfo (info.m_Guid, info.m_Id));
-					++index;
+					try {
+						PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
+						if (info.m_AllowDebugging) {
+							UnityPlayers[info.m_Guid] = info;
+							processes.Add (new ProcessInfo (info.m_Guid, info.m_Id));
+							++index;
+						}
+					} catch {
+						// Don't care; continue
+					}
 				}
 			}
 			foreach (Process p in Process.GetProcesses ()) {

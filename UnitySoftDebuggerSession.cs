@@ -125,6 +125,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				EndUnityProcess ();
 				base.EndSession ();
 			} catch (Mono.Debugger.Soft.VMDisconnectedException) {
+			} catch (ObjectDisposedException) {
 			}
 		}
 		

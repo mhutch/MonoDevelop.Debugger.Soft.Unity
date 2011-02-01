@@ -68,7 +68,10 @@ namespace MonoDevelop.Debugger.Soft.Unity
 					Thread.Sleep (1000);
 				}
 			});
-			} catch { }
+			} catch (Exception e)
+			{
+				LoggingService.LogError ("Error launching player connection discovery service: Unity player discovery will be unavailable", e);
+			}
 		}
 		
 		public string Id {
@@ -119,31 +122,36 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			int index = 1;
 			List<ProcessInfo> processes = new List<ProcessInfo> ();
 			bool foundEditor = false;
+			Process[] systemProcesses = Process.GetProcesses ();
 			
-			lock (unityPlayerConnection) {
-				foreach (string player in unityPlayerConnection.AvailablePlayers) {
-					try {
-						PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
-						if (info.m_AllowDebugging) {
-							UnityPlayers[info.m_Guid] = info;
-							processes.Add (new ProcessInfo (info.m_Guid, info.m_Id));
-							++index;
+			if (null != unityPlayerConnection) {
+				lock (unityPlayerConnection) {
+					foreach (string player in unityPlayerConnection.AvailablePlayers) {
+						try {
+							PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
+							if (info.m_AllowDebugging) {
+								UnityPlayers[info.m_Guid] = info;
+								processes.Add (new ProcessInfo (info.m_Guid, info.m_Id));
+								++index;
+							}
+						} catch {
+							// Don't care; continue
 						}
-					} catch {
-						// Don't care; continue
 					}
 				}
 			}
 			if (!PropertyService.IsMac) {
-				foreach (Process p in Process.GetProcesses ()) {
-					try {
-						if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
-							p.ProcessName.Contains ("Unity.app")) {
-							processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
-							foundEditor = true;
+				if (null != systemProcesses) {
+					foreach (Process p in Process.GetProcesses ()) {
+						try {
+							if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
+								p.ProcessName.Contains ("Unity.app")) {
+								processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
+								foundEditor = true;
+							}
+						} catch {
+							// Don't care; continue
 						}
-					} catch {
-						// Don't care; continue
 					}
 				}
 			}

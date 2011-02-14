@@ -124,6 +124,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				EndUnityProcess ();
 				base.EndSession ();
 			} catch (Mono.Debugger.Soft.VMDisconnectedException) {
+			} catch (ObjectDisposedException) {
 			}
 		}
 		
@@ -133,19 +134,13 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				EndUnityProcess ();
 				base.OnExit ();
 			} catch (Mono.Debugger.Soft.VMDisconnectedException) {
+			} catch (ObjectDisposedException) {
 			}
 		}
 		
 		void EndUnityProcess ()
 		{
-			if (unityprocess == null || unityprocess.HasExited)
-			{
-				unityprocess = null;
-				return;
-			}
-
-			unityprocess.Kill ();
-			unityprocess.WaitForExit (5000);
+			Detach ();
 			unityprocess = null;
 		}
 	
@@ -161,15 +156,25 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		protected override void OnAttachToProcess (long processId)
 		{
 			if (UnitySoftDebuggerEngine.UnityPlayers.ContainsKey ((uint)processId)) {
+				int port = (int)(56000 + (processId % 1000));
 				PlayerConnection.PlayerInfo player = UnitySoftDebuggerEngine.UnityPlayers[(uint)processId];
 				try {
-					StartConnecting (new RemoteDebuggerStartInfo (player.m_Id, player.m_IPEndPoint.Address, (int)clientPort), 3, 1000);
+					StartConnecting (new RemoteDebuggerStartInfo (player.m_Id, player.m_IPEndPoint.Address, port), 3, 1000);
 				} catch (Exception ex) {
-					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, clientPort), ex);
+					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, port), ex);
 				}
 				return;
 			}
 			base.OnAttachToProcess (processId);
+		}
+
+		protected override void OnDetach()
+		{
+			try {
+				base.OnDetach();
+			} catch (ObjectDisposedException) {
+			} catch (VMDisconnectedException) {
+			}
 		}
 	}
 }

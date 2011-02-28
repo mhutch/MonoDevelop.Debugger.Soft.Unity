@@ -37,6 +37,7 @@ using System.Collections.Generic;
 using MonoDevelop.Debugger;
 using MonoDevelop.Core;
 using MonoDevelop.Core.Execution;
+using Mono.Debugging.Soft;
 using Mono.Debugging.Client;
 using MonoDevelop.Debugger.Soft;
 
@@ -88,7 +89,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			var cmd = command as UnityExecutionCommand;
 			if (null == cmd){ return null; }
 			var msi = new UnityDebuggerStartInfo ("Unity");
-			msi.SetUserAssemblies (null);
+			// msi.SetUserAssemblies (null);
 			msi.Arguments = string.Format ("-projectPath \"{0}\"", cmd.ProjectPath);
 			return msi;
 		}
@@ -133,11 +134,17 @@ namespace MonoDevelop.Debugger.Soft.Unity
 					}
 				}
 			}
-			foreach (Process p in Process.GetProcesses ()) {
-				if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
-					p.ProcessName.Contains ("Unity.app")) {
-					processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
-					foundEditor = true;
+			if (!PropertyService.IsMac) {
+				foreach (Process p in Process.GetProcesses ()) {
+					try {
+						if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
+							p.ProcessName.Contains ("Unity.app")) {
+							processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
+							foundEditor = true;
+						}
+					} catch {
+						// Don't care; continue
+					}
 				}
 			}
 			
@@ -155,10 +162,10 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		}
 	}
 	
-	class UnityDebuggerStartInfo : RemoteDebuggerStartInfo
+	class UnityDebuggerStartInfo : SoftDebuggerStartInfo
 	{
 		public UnityDebuggerStartInfo (string appName)
-			: base (appName, IPAddress.Loopback, 57432)
+			: base (new SoftDebuggerConnectArgs (appName, IPAddress.Loopback, 57432))
 		{
 		}
 	}

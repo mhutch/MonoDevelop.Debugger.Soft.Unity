@@ -30,6 +30,7 @@
 using System;
 using Mono.Debugger;
 using Mono.Debugging;
+using Mono.Debugging.Soft;
 using Mono.Debugger.Soft;
 using Mono.Debugging.Client;
 using System.Threading;
@@ -46,7 +47,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	/// <summary>
 	/// Debugger session for Unity scripting code
 	/// </summary>
-	public class UnitySoftDebuggerSession : RemoteSoftDebuggerSession
+	public class UnitySoftDebuggerSession : Mono.Debugging.Soft.SoftDebuggerSession
 	{
 		Process unityprocess;
 		string unityPath;
@@ -149,23 +150,22 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			unityprocess.WaitForExit (5000);
 			unityprocess = null;
 		}
-	
-
-		protected override void OnConnected ()
+		
+		protected override string GetConnectingMessage (DebuggerStartInfo dsi)
 		{
-			base.OnConnected ();
 			Ide.DispatchService.GuiDispatch (() =>
 				Ide.IdeApp.Workbench.CurrentLayout = "Debug"
 			);
+			return base.GetConnectingMessage (dsi);
 		}
-
+		
 		protected override void OnAttachToProcess (long processId)
 		{
 			if (UnitySoftDebuggerEngine.UnityPlayers.ContainsKey ((uint)processId)) {
 				int port = (int)(56000 + (processId % 1000));
 				PlayerConnection.PlayerInfo player = UnitySoftDebuggerEngine.UnityPlayers[(uint)processId];
 				try {
-					StartConnecting (new RemoteDebuggerStartInfo (player.m_Id, player.m_IPEndPoint.Address, (int)port), 3, 1000);
+					StartConnecting (new SoftDebuggerStartInfo (new SoftDebuggerConnectArgs (player.m_Id, player.m_IPEndPoint.Address, (int)port)), 3, 1000);
 				} catch (Exception ex) {
 					throw new Exception (string.Format ("Unable to attach to {0}:{1}", player.m_IPEndPoint.Address, port), ex);
 				}

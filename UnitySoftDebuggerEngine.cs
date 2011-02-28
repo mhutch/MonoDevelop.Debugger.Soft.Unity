@@ -70,7 +70,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			});
 			} catch (Exception e)
 			{
-				LoggingService.LogError ("Error launching player connection discovery service: Unity player discovery will be unavailable", e);
+				MonoDevelop.Core.LoggingService.LogError ("Error launching player connection discovery service: Unity player discovery will be unavailable", e);
 			}
 		}
 		

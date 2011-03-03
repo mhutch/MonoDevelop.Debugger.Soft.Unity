@@ -75,7 +75,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		/// </summary>
 		void StartUnity (UnityDebuggerStartInfo dsi)
 		{
-			if (!Util.UnityLaunch)
+			if (string.IsNullOrEmpty (unityPath) || !Util.UnityLaunch)
 				return; // Wait for remote connection
 				
 			if (unityprocess != null)

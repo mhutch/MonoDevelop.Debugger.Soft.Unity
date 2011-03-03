@@ -112,7 +112,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			try
 			{
 				m_MulticastSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-				m_MulticastSocket.ExclusiveAddressUse = false;
+				try { m_MulticastSocket.ExclusiveAddressUse = false; } catch (SocketException) {
+					// This option is not supported on some OSs
+				}
 				m_MulticastSocket.SetSocketOption (SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 				IPEndPoint ipep = new IPEndPoint(IPAddress.Any, PLAYER_MULTICAST_PORT);
 				m_MulticastSocket.Bind(ipep);
@@ -131,11 +133,11 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public void Poll ()
 		{
 			// Update last-seen
-			foreach (string player in m_AvailablePlayers.Keys) {
+			foreach (string player in m_AvailablePlayers.Keys.ToList ()) {
 				--m_AvailablePlayers[player];
 			}
 			
-			if (m_MulticastSocket != null && m_MulticastSocket.Available > 0)
+			while (m_MulticastSocket != null && m_MulticastSocket.Available > 0)
 			{ 
 				byte[] buffer = new byte[1024];
 				

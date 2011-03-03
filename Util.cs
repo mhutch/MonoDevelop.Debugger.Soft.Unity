@@ -84,9 +84,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				unityLocation = unityOSX;
 			} else if (PropertyService.IsWindows) {
 				unityLocation = (File.Exists (unityWinX86)? unityWinX86: unityWin);
-			} else {
-				LoggingService.LogError ("Unity is not supported on this platform.");
-			}
+			} 
 			
 			return unityLocation;
 		}

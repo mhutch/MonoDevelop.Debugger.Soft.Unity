@@ -34,6 +34,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
@@ -44,13 +45,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	{
 		public const int PLAYER_MULTICAST_PORT = 54997;
 		public const string PLAYER_MULTICAST_GROUP = "225.0.0.222";
+		public const int MAX_LAST_SEEN_ITERATIONS = 3;
 		
 		private Socket m_MulticastSocket = null;
-		private HashSet<string> m_AvailablePlayers = new HashSet<string>();
+		private Dictionary<string,int> m_AvailablePlayers = new Dictionary<string,int>();
 		
-		public HashSet<string> AvailablePlayers {
+		public IEnumerable<string> AvailablePlayers {
 			get {
-				return new HashSet<string>(m_AvailablePlayers);
+				return m_AvailablePlayers.Where (p => (0 < p.Value)).Select (p => p.Key);
 			}
 		}
 		
@@ -128,6 +130,11 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		public void Poll ()
 		{
+			// Update last-seen
+			foreach (string player in m_AvailablePlayers.Keys) {
+				--m_AvailablePlayers[player];
+			}
+			
 			if (m_MulticastSocket != null && m_MulticastSocket.Available > 0)
 			{ 
 				byte[] buffer = new byte[1024];
@@ -141,7 +148,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		
 		protected void RegisterPlayer(string playerString)
 		{
-			m_AvailablePlayers.Add(playerString);
+			m_AvailablePlayers[playerString] = MAX_LAST_SEEN_ITERATIONS;
 		}
 	}
 }

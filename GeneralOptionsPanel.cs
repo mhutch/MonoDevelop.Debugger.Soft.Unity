@@ -47,7 +47,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		{
 			this.Build ();
 			
-			if (PropertyService.IsMac) {
+			if (Platform.IsMac) {
 				unityChooser.Action = Gtk.FileChooserAction.SelectFolder;
 				unityChooser.Title = "Browse to the Unity app";
 			}
@@ -55,7 +55,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			// Load defaults
 			unityChooser.SetFilename (Environment.GetFolderPath (Environment.SpecialFolder.Personal));
 			
-			if (PropertyService.IsMac) {
+			if (Platform.IsMac) {
 				if (File.Exists (Util.UnityLocation)) {
 					unityChooser.SetCurrentFolder (Util.UnityLocation.Replace(internalPath, string.Empty));
 				} else if (Directory.Exists (Util.UnityLocation)) {
@@ -75,7 +75,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public bool Store ()
 		{
 			Util.UnityLocation = unityChooser.Filename;
-			if (PropertyService.IsMac) {
+			if (Platform.IsMac) {
 				string fullPath = Util.UnityLocation + internalPath;
 				if (File.Exists (fullPath)) {
 					Util.UnityLocation = fullPath;

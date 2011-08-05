@@ -80,9 +80,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		{
 			string unityLocation = string.Empty;
 			
-			if (PropertyService.IsMac) {
+			if (Platform.IsMac) {
 				unityLocation = unityOSX;
-			} else if (PropertyService.IsWindows) {
+			} else if (Platform.IsWindows) {
 				unityLocation = (File.Exists (unityWinX86)? unityWinX86: unityWin);
 			} 
 			

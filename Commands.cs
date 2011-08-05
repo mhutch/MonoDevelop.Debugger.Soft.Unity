@@ -53,9 +53,9 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			string[] paths = new string[]{};
 			
 			
-			if (PropertyService.IsMac) {
+			if (Platform.IsMac) {
 				paths = new string[]{ "/Applications/Unity/Documentation/ScriptReference" };
-			} else if (PropertyService.IsWindows) {
+			} else if (Platform.IsWindows) {
 				paths = new string[]{ "C:/Program Files/Unity/Documentation/ScriptReference", "C:/Program Files (x86)/Unity/Documentation/Script Reference" };
 			}// Initialize script reference base path
 			

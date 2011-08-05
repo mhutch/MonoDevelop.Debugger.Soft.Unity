@@ -140,7 +140,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 					}
 				}
 			}
-			if (!PropertyService.IsMac) {
+			if (!Platform.IsMac) {
 				if (null != systemProcesses) {
 					foreach (Process p in Process.GetProcesses ()) {
 						try {
@@ -156,7 +156,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				}
 			}
 			
-			if (!foundEditor && PropertyService.IsMac) {
+			if (!foundEditor && Platform.IsMac) {
 				processes.Add (new ProcessInfo (56432, "Unity Editor (placeholder)"));
 			}
 			

@@ -142,10 +142,14 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			
 			if (null != systemProcesses) {
 				foreach (Process p in systemProcesses) {
-					if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
-						p.ProcessName.Contains ("Unity.app")) {
-						processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
-						foundEditor = true;
+					try {
+						if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
+							p.ProcessName.Contains ("Unity.app")) {
+							processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
+							foundEditor = true;
+						}
+					} catch { 
+						// Don't care
 					}
 				}
 			}

@@ -121,7 +121,6 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		{
 			int index = 1;
 			List<ProcessInfo> processes = new List<ProcessInfo> ();
-			bool foundEditor = false;
 			Process[] systemProcesses = Process.GetProcesses ();
 			
 			if (null != unityPlayerConnection) {
@@ -140,24 +139,17 @@ namespace MonoDevelop.Debugger.Soft.Unity
 					}
 				}
 			}
-			if (!Platform.IsMac) {
-				if (null != systemProcesses) {
-					foreach (Process p in Process.GetProcesses ()) {
-						try {
-							if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
-								p.ProcessName.Contains ("Unity.app")) {
-								processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
-								foundEditor = true;
-							}
-						} catch {
-							// Don't care; continue
+			if (null != systemProcesses) {
+				foreach (Process p in Process.GetProcesses ()) {
+					try {
+						if (p.ProcessName.StartsWith ("unity", StringComparison.OrdinalIgnoreCase) ||
+							p.ProcessName.Contains ("Unity.app")) {
+							processes.Add (new ProcessInfo (p.Id, string.Format ("{0} ({1})", "Unity Editor", p.ProcessName)));
 						}
+					} catch {
+						// Don't care; continue
 					}
 				}
-			}
-			
-			if (!foundEditor && Platform.IsMac) {
-				processes.Add (new ProcessInfo (56432, "Unity Editor (placeholder)"));
 			}
 			
 			return processes.ToArray ();

@@ -86,10 +86,6 @@
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="icons\unity-icon-24.png" />
-    <EmbeddedResource Include="templates\NewBehaviourScriptCS.xft.xml" />
-    <EmbeddedResource Include="templates\NewBehaviourScriptJS.xft.xml" />
-    <EmbeddedResource Include="templates\NewBehaviourScriptBoo.xft.xml" />
-    <EmbeddedResource Include="templates\NewShader.xft.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitySoftDebuggerEngine.cs" />
@@ -118,7 +114,4 @@
     </MonoDevelop>
     <VisualStudio />
   </ProjectExtensions>
-  <ItemGroup>
-    <Folder Include="templates\" />
-  </ItemGroup>
 </Project>

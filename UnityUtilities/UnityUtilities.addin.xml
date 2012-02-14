@@ -26,4 +26,11 @@
 			macShortcut = "Meta|'"
 		/>
 	</Extension>
+	
+	<Extension path = "/MonoDevelop/Ide/FileTemplates">
+		<FileTemplate id = "NewBehaviourScriptCS" resource = "Unity.Utilities.templates.NewBehaviourScriptCS.xft.xml"/>
+		<FileTemplate id = "NewBehaviourScriptJS" resource = "Unity.Utilities.templates.NewBehaviourScriptJS.xft.xml"/>
+		<FileTemplate id = "NewBehaviourScriptBoo" resource = "Unity.Utilities.templates.NewBehaviourScriptBoo.xft.xml"/>
+		<FileTemplate id = "NewShader" resource = "Unity.Utilities.templates.NewShader.xft.xml"/>
+	</Extension>
 </Addin>

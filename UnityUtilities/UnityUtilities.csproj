@@ -35,6 +35,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UnityUtilities.addin.xml" />
+    <EmbeddedResource Include="templates\NewBehaviourScriptCS.xft.xml" />
+    <EmbeddedResource Include="templates\NewBehaviourScriptJS.xft.xml" />
+    <EmbeddedResource Include="templates\NewBehaviourScriptBoo.xft.xml" />
+    <EmbeddedResource Include="templates\NewShader.xft.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoDevelop.Core">

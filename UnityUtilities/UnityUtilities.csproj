@@ -39,6 +39,7 @@
     <EmbeddedResource Include="templates\NewBehaviourScriptJS.xft.xml" />
     <EmbeddedResource Include="templates\NewBehaviourScriptBoo.xft.xml" />
     <EmbeddedResource Include="templates\NewShader.xft.xml" />
+    <EmbeddedResource Include="SyntaxModes\ShaderLabSyntaxMode.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoDevelop.Core">
@@ -47,5 +48,8 @@
     <Reference Include="MonoDevelop.Ide">
       <HintPath>..\..\monodevelop\main\build\bin\MonoDevelop.Ide.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SyntaxModes\" />
   </ItemGroup>
 </Project>

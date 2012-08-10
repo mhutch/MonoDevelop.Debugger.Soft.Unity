@@ -174,6 +174,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 				base.OnDetach();
 			} catch (ObjectDisposedException) {
 			} catch (VMDisconnectedException) {
+			} catch (NullReferenceException) {
 			}
 		}
 	}

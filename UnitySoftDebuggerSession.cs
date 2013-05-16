@@ -156,8 +156,12 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		protected override void OnAttachToProcess (long processId)
 		{
 			if (UnitySoftDebuggerEngine.UnityPlayers.ContainsKey ((uint)processId)) {
-				int port = (int)(56000 + (processId % 1000));
 				PlayerConnection.PlayerInfo player = UnitySoftDebuggerEngine.UnityPlayers[(uint)processId];
+				int port = (int)(56000 + (player.m_Guid % 1000));
+				
+				if (player.m_Proxy)
+					PlayerConnection.LaunchProxy(port);
+					
 				try {
 					StartConnecting (new SoftDebuggerStartInfo (new SoftDebuggerConnectArgs (player.m_Id, player.m_IPEndPoint.Address, (int)port)), 3, 1000);
 				} catch (Exception ex) {

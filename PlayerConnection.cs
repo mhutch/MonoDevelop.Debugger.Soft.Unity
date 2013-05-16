@@ -35,6 +35,7 @@ using System.Runtime.InteropServices;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Diagnostics;
 
 namespace MonoDevelop.Debugger.Soft.Unity
 {
@@ -46,6 +47,10 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		public const int PLAYER_MULTICAST_PORT = 54997;
 		public const string PLAYER_MULTICAST_GROUP = "225.0.0.222";
 		public const int MAX_LAST_SEEN_ITERATIONS = 3;
+		
+		private static string s_BasePath = AppDomain.CurrentDomain.BaseDirectory;
+		private static string s_IProxyLocation = Path.Combine (s_BasePath, "../../../../../../Unity.app/Contents/BuildTargetTools/iPhonePlayer/iproxy");
+		public static bool s_IProxySupported = File.Exists(s_IProxyLocation);
 		
 		private Socket m_MulticastSocket = null;
 		private Dictionary<string,int> m_AvailablePlayers = new Dictionary<string,int>();
@@ -65,6 +70,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			public Int32 m_Version;
 			public string m_Id;
 			public bool m_AllowDebugging;
+			public bool m_Proxy;
 			
 			public override string ToString ()
 			{
@@ -111,6 +117,8 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		{
 			try
 			{
+				System.Console.WriteLine("iproxy {0} usb proxy supported {1}", s_IProxyLocation, s_IProxySupported);
+				
 				m_MulticastSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 				try { m_MulticastSocket.ExclusiveAddressUse = false; } catch (SocketException) {
 					// This option is not supported on some OSs
@@ -151,6 +159,30 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		protected void RegisterPlayer(string playerString)
 		{
 			m_AvailablePlayers[playerString] = MAX_LAST_SEEN_ITERATIONS;
+		}
+		
+		private static void OnDataReceived(object Sender, DataReceivedEventArgs e)
+		{
+		    if (e.Data != null)
+		        System.Console.WriteLine(e.Data);
+		}
+		
+		public static void LaunchProxy(int port)
+		{
+			ProcessStartInfo startInfo = new ProcessStartInfo(s_IProxyLocation, "" + port + " " + port);
+			Process iproxy = new Process ();
+				
+			startInfo.RedirectStandardError = true;
+			startInfo.RedirectStandardOutput = true;
+			startInfo.UseShellExecute = false;
+			
+			iproxy.StartInfo = startInfo;
+			iproxy.OutputDataReceived += new DataReceivedEventHandler(OnDataReceived);
+			iproxy.Start ();
+			
+			iproxy.BeginOutputReadLine();
+			
+			//runningIProxies.Add(iproxy);
 		}
 	}
 }

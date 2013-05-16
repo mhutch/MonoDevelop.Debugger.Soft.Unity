@@ -125,12 +125,25 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			
 			if (null != unityPlayerConnection) {
 				lock (unityPlayerConnection) {
+				
+					uint proxyGuid = 0xFFFFFFFF;
+				
 					foreach (string player in unityPlayerConnection.AvailablePlayers) {
 						try {
 							PlayerConnection.PlayerInfo info = PlayerConnection.PlayerInfo.Parse (player);
 							if (info.m_AllowDebugging) {
 								UnityPlayers[info.m_Guid] = info;
 								processes.Add (new ProcessInfo (info.m_Guid, info.m_Id));
+								
+								if (PlayerConnection.s_IProxySupported && info.m_Id.Contains("iPhonePlayer"))
+								{
+									info.m_Proxy = true;
+									info.m_IPEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), info.m_IPEndPoint.Port);
+									UnityPlayers[proxyGuid] = info;
+									processes.Add (new ProcessInfo (proxyGuid, info.m_Id + " over USB"));
+									--proxyGuid;
+								}
+								
 								++index;
 							}
 						} catch {

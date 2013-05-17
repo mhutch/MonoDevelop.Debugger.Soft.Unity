@@ -9,7 +9,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Unity.Utilities</RootNamespace>
     <AssemblyName>UnityUtilities</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -43,17 +42,21 @@
     <EmbeddedResource Include="SyntaxModes\UnityTxtSyntaxMode.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoDevelop.Core">
-      <HintPath>..\..\monodevelop\main\build\bin\MonoDevelop.Core.dll</HintPath>
+    <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49">
+      <Private>False</Private>
+      <Package>/Applications/Xamarin Studio.app/Contents/MacOS/lib/monodevelop/bin/ICSharpCode.NRefactory.dll</Package>
     </Reference>
-    <Reference Include="MonoDevelop.Ide">
-      <HintPath>..\..\monodevelop\main\build\bin\MonoDevelop.Ide.dll</HintPath>
+    <Reference Include="MonoDevelop.Core, Version=2.6.0.0, Culture=neutral">
+      <Private>False</Private>
+      <Package>/Applications/Xamarin Studio.app/Contents/MacOS/lib/monodevelop/bin/MonoDevelop.Core.dll</Package>
     </Reference>
-    <Reference Include="Mono.TextEditor">
-      <HintPath>..\..\monodevelop\main\build\bin\Mono.TextEditor.dll</HintPath>
+    <Reference Include="MonoDevelop.Ide, Version=2.6.0.0, Culture=neutral">
+      <Private>False</Private>
+      <Package>/Applications/Xamarin Studio.app/Contents/MacOS/lib/monodevelop/bin/MonoDevelop.Ide.dll</Package>
     </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>..\..\monodevelop\main\build\bin\ICSharpCode.NRefactory.dll</HintPath>
+    <Reference Include="Mono.TextEditor, Version=1.0.0.0, Culture=neutral">
+      <Private>False</Private>
+      <Package>/Applications/Xamarin Studio.app/Contents/MacOS/lib/monodevelop/bin/Mono.TextEditor.dll</Package>
     </Reference>
   </ItemGroup>
   <ItemGroup>

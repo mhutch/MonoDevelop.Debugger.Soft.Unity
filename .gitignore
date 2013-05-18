@@ -5,3 +5,8 @@ bin/Debug/UnityUtilities.dll
 bin/Debug/UnityUtilities.dll.mdb
 bin/Release/MonoDevelop.Debugger.Soft.Unity.dll
 obj/Release/UnityUtilities.dll
+bin/Debug/Mono.Debugger.Soft.dll
+bin/Debug/Mono.Debugger.Soft.dll.mdb
+bin/Release/Manifest.addin.xml
+bin/Release/Mono.Debugger.Soft.dll
+bin/Release/Mono.Debugger.Soft.dll.mdb

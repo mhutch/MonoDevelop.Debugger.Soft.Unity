@@ -79,6 +79,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Manifest.addin.xml">
       <LogicalName>Manifest.addin.xml</LogicalName>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>

@@ -23,7 +23,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>False</Optimize>
-    <OutputPath>..\obj\Release</OutputPath>
+    <OutputPath>..\bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
@@ -33,7 +33,9 @@
     <Compile Include="Commands.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UnityUtilities.addin.xml" />
+    <EmbeddedResource Include="UnityUtilities.addin.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="templates\NewBehaviourScriptCS.xft.xml" />
     <EmbeddedResource Include="templates\NewBehaviourScriptJS.xft.xml" />
     <EmbeddedResource Include="templates\NewBehaviourScriptBoo.xft.xml" />

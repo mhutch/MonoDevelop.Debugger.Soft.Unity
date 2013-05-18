@@ -154,7 +154,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			
 			return processes.ToArray ();
 		}
-		
+
 		public string Name {
 			get {
 				return "Mono Soft Debugger for Unity";

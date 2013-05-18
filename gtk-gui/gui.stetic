@@ -9,7 +9,7 @@
     <widget-library name="MonoDevelop.Debugger, Version=2.6.0.0, Culture=neutral" />
     <widget-library name="MonoDevelop.Debugger.Soft, Version=2.6.0.0, Culture=neutral" />
     <widget-library name="MonoDevelop.Ide, Version=2.6.0.0, Culture=neutral" />
-    <widget-library name="../bin/Release/MonoDevelop.Debugger.Soft.Unity.dll" internal="true" />
+    <widget-library name="../bin/Debug/MonoDevelop.Debugger.Soft.Unity.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="MonoDevelop.Debugger.Soft.Unity.GeneralOptionsPanel" design-size="300 300">
     <property name="MemberName" />

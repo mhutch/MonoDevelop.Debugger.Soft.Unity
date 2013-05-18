@@ -40,7 +40,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 	/// <summary>
 	/// ProjectServiceExtension to allow Unity projects to be executed under the soft debugger
 	/// </summary>
-	public class UnityProjectServiceExtension: ProjectServiceExtension
+	public class UnityProjectServiceExtension : ProjectServiceExtension
 	{
 		internal static string EditLayout = "Solution";
 		

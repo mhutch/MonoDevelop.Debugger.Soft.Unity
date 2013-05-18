@@ -20,7 +20,8 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="Execute" command="bash -lc &quot;open -W Unity.app&quot;" workingdir="/Users/levi/Code/unity/unity-trunk/build/MacEditor" pauseExternalConsole="True" />
+        <Command type="Execute" command="bash -lc &quot;/Applications/Xamarin\ Studio.app/Contents/MacOS/XamarinStudio&quot;" workingdir="${TargetDir}" pauseExternalConsole="True">
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -46,6 +47,7 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="Mono.Debugger.Soft">
       <HintPath>..\monodevelop\main\build\AddIns\MonoDevelop.Debugger.Soft\Mono.Debugger.Soft.dll</HintPath>
+      <Package>/Applications/Xamarin Studio.app/Contents/MacOS/lib/monodevelop/AddIns/MonoDevelop.Debugger.Soft/Mono.Debugger.Soft.dll</Package>
     </Reference>
     <Reference Include="Mono.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5e9ce85b0923c84f">
       <Private>False</Private>

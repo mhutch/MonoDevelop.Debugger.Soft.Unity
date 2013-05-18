@@ -1,0 +1,7 @@
+bin/Debug/Manifest.addin.xml
+bin/Debug/MonoDevelop.Debugger.Soft.Unity.dll
+bin/Debug/MonoDevelop.Debugger.Soft.Unity.dll.mdb
+bin/Debug/UnityUtilities.dll
+bin/Debug/UnityUtilities.dll.mdb
+bin/Release/MonoDevelop.Debugger.Soft.Unity.dll
+obj/Release/UnityUtilities.dll

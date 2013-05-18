@@ -10,7 +10,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 		private global::Gtk.FileChooserButton unityChooser;
 		private global::Gtk.CheckButton launchCB;
 		private global::Gtk.CheckButton buildCB;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -35,7 +35,7 @@ namespace MonoDevelop.Debugger.Soft.Unity
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.unityChooser = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString ("Browse to the Unity editor"), ((global::Gtk.FileChooserAction)(0)));
+			this.unityChooser = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString("Browse to the Unity editor"), ((global::Gtk.FileChooserAction)(0)));
 			this.unityChooser.Name = "unityChooser";
 			this.hbox1.Add (this.unityChooser);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.unityChooser]));
